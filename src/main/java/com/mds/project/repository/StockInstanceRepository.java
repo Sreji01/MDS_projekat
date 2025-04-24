@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface StockInstanceRepository extends JpaRepository<StockInstance, Long> {
 
     Optional<StockInstance> findStockInstanceById(Long id);
+
+    StockInstance findFirstByOrderByIdAsc();
 }

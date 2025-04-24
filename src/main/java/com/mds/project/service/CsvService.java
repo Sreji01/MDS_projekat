@@ -33,7 +33,7 @@ public class CsvService {
 
     public void loadDataFromCsv() throws IOException, CsvException, ParseException {
 
-        if(stockInstanceRepository.findStockInstanceById(1L).isPresent()){
+        if (stockInstanceRepository.findFirstByOrderByIdAsc() != null) {
             return;
         }
 
@@ -50,22 +50,37 @@ public class CsvService {
                 for (int i = 1; i < records.size(); i++) {
                     String[] row = records.get(i);
 
-                        StockInstance instance = new StockInstance();
-                        instance.setStock(stock);
-                        instance.setDate(getDate(row[0]));
-                        instance.setOpen(Double.parseDouble(row[1]));
-                        instance.setHigh(Double.parseDouble(row[2]));
-                        instance.setLow(Double.parseDouble(row[3]));
-                        instance.setClose(Double.parseDouble(row[4]));
-                        instance.setAdjClose(Double.parseDouble(row[5]));
-                        instance.setVolume(Long.parseLong(row[6]));
-                        stockInstances.add(instance);
-                    }
+                    StockInstance instance = new StockInstance();
+                    instance.setStock(stock);
+                    instance.setDate(safeParse(row[0], Date.class));
+                    instance.setOpen(safeParse(row[1], Double.class));
+                    instance.setHigh(safeParse(row[2], Double.class));
+                    instance.setLow(safeParse(row[3], Double.class));
+                    instance.setClose(safeParse(row[4], Double.class));
+                    instance.setAdjClose(safeParse(row[5], Double.class));
+                    instance.setVolume(safeParse(row[6], Long.class));
+                    stockInstances.add(instance);
                 }
             }
-        stockInstanceRepository.saveAll(stockInstances);
+            stockInstanceRepository.saveAll(stockInstances);
         }
+    }
 
+    private <T> T safeParse(String value, Class<T> type) throws ParseException {
+        if (value == null || value.trim().equalsIgnoreCase("null") || value.trim().isEmpty()) {
+            return null;
+        }
+        if (type == Double.class) {
+            return type.cast(Double.parseDouble(value.trim()));
+        } else if (type == Long.class) {
+            return type.cast(Long.parseLong(value.trim()));
+        } else if (type == Integer.class) {
+            return type.cast(Integer.parseInt(value.trim()));
+        } else if (type == Date.class) {
+            return type.cast(getDate(value.trim()));
+        }
+        throw new IllegalArgumentException("Unsupported type: " + type.getName());
+    }
 
     private Date getDate(String dateString) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
