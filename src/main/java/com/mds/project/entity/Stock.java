@@ -3,7 +3,9 @@ package com.mds.project.entity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "stock")
@@ -22,8 +24,8 @@ public class Stock {
     @Column(name = "company_founding_date")
     private Date companyFoundingDate;
 
-    @Column(name = "current_price")
-    private BigDecimal currentPrice;
+    @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
+    private List<StockInstance> instances = new ArrayList<>();
 
     public Stock(){
 
@@ -67,12 +69,12 @@ public class Stock {
         this.companyFoundingDate = companyFoundingDate;
     }
 
-    public BigDecimal getCurrentPrice() {
-        return currentPrice;
+    public List<StockInstance> getInstances() {
+        return instances;
     }
 
-    public void setCurrentPrice(BigDecimal currentPrice) {
-        this.currentPrice = currentPrice;
+    public void setInstances(List<StockInstance> instances) {
+        this.instances = instances;
     }
 
     @Override
@@ -82,7 +84,6 @@ public class Stock {
                 ", companyName='" + companyName + '\'' +
                 ", stockTicker='" + stockTicker + '\'' +
                 ", companyFoundingDate=" + companyFoundingDate +
-                ", currentPrice=" + currentPrice +
-                '}';
+                 '}';
     }
 }
