@@ -20,8 +20,12 @@ public class StockInstance {
 
     private Double low;
 
+    private Double close;
+
     @Column(name = "adj_close")
     private Double adjClose;
+
+    private Long volume;
 
     @ManyToOne
     @JoinColumn(name = "stock_id")
@@ -31,12 +35,15 @@ public class StockInstance {
 
     }
 
-    public StockInstance(Date date, Double open, Double high, Double low, Double adjClose) {
+    public StockInstance(Long id, Date date, Double open, Double high, Double low, Double close, Double adjClose, Long volume) {
+        this.id = id;
         this.date = date;
         this.open = open;
         this.high = high;
         this.low = low;
+        this.close = close;
         this.adjClose = adjClose;
+        this.volume = volume;
     }
 
     public Long getId() {
@@ -79,12 +86,28 @@ public class StockInstance {
         this.low = low;
     }
 
+    public Double getClose() {
+        return close;
+    }
+
+    public void setClose(Double close) {
+        this.close = close;
+    }
+
     public Double getAdjClose() {
         return adjClose;
     }
 
     public void setAdjClose(Double adjClose) {
         this.adjClose = adjClose;
+    }
+
+    public Long getVolume() {
+        return volume;
+    }
+
+    public void setVolume(Long volume) {
+        this.volume = volume;
     }
 
     public Stock getStock() {
@@ -103,7 +126,9 @@ public class StockInstance {
                 ", open=" + open +
                 ", high=" + high +
                 ", low=" + low +
+                ", close=" + close +
                 ", adjClose=" + adjClose +
+                ", volume=" + volume +
                 '}';
     }
 }
