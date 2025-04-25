@@ -7,7 +7,9 @@ import com.mds.project.repository.StockRepository;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.event.EventListener;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,6 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -32,13 +33,45 @@ public class CsvService {
     @Autowired
     private StockInstanceRepository stockInstanceRepository;
 
-    public void loadDataFromCsv() throws IOException, CsvException, ParseException {
+    @EventListener(ApplicationReadyEvent.class)
+    public void loadData() throws IOException, CsvException, ParseException {
+        loadCompanies();
+        loadStocks();
+    }
+
+    private void loadCompanies() throws IOException, CsvException, ParseException {
+
+        if (stockRepository.findFirstByOrderByIdAsc() != null) {
+            return;
+        }
+
+        Resource[] resources = context.getResources("classpath:data/companies/*.csv");
+        List<Stock> companies = new ArrayList<>();
+        for (Resource resource : resources) {
+            try (CSVReader csvReader = new CSVReader(new InputStreamReader(resource.getInputStream()))) {
+                List<String[]> records = csvReader.readAll();
+
+                for (int i = 1; i < records.size(); i++) {
+                    String[] row = records.get(i);
+                    Stock stock = new Stock();
+                    stock.setCompanyName(row[0]);
+                    stock.setStockTicker(row[1]);
+                    stock.setCompanyFoundingDate(safeParse(row[2], LocalDate.class));
+                    companies.add(stock);
+
+                }
+            }
+        }
+        stockRepository.saveAll(companies);
+    }
+
+    private void loadStocks() throws IOException, CsvException, ParseException {
 
         if (stockInstanceRepository.findFirstByOrderByIdAsc() != null) {
             return;
         }
 
-        Resource[] resources = context.getResources("classpath:data/*.csv");
+        Resource[] resources = context.getResources("classpath:data/stock/*.csv");
 
         List<StockInstance> stockInstances = new ArrayList<>();
 
