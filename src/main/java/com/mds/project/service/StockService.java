@@ -36,10 +36,6 @@ public class StockService {
     private StockAnalysisResponse calculateBestTrades(LocalDate startDate, LocalDate endDate) throws Exception {
         List<StockInstance> stocks = stockInstanceRepository.findByStockTickerDateBetween(stockTicker, startDate, endDate);
 
-        if(stocks.isEmpty()){
-            throw new Exception();
-        }
-
         Double minValue = Double.MAX_VALUE;
         LocalDate buyDate = null;
         Double buyCloseValue = 0.0;
