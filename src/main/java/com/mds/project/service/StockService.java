@@ -20,7 +20,7 @@ public class StockService {
 
     String stockTicker;
 
-    public List<StockAnalysisResponse> analyseStocks(String stockTicker, LocalDate startDate, LocalDate endDate) {
+    public List<StockAnalysisResponse> analyseStocks(String stockTicker, LocalDate startDate, LocalDate endDate) throws Exception {
 
         this.stockTicker = stockTicker;
 
@@ -33,8 +33,12 @@ public class StockService {
         return List.of(responseBefore, responseDuring, responseAfter);
     }
 
-    private StockAnalysisResponse calculateBestTrades(LocalDate startDate, LocalDate endDate) {
+    private StockAnalysisResponse calculateBestTrades(LocalDate startDate, LocalDate endDate) throws Exception {
         List<StockInstance> stocks = stockInstanceRepository.findByStockTickerDateBetween(stockTicker, startDate, endDate);
+
+        if(stocks.isEmpty()){
+            throw new Exception();
+        }
 
         Double minValue = Double.MAX_VALUE;
         LocalDate buyDate = null;

@@ -24,7 +24,7 @@ public class StockServiceTest {
     private StockService stockService;
 
     @Test
-    void calculateProfitAccuracy(){
+    void calculateProfitAccuracy() throws Exception {
         String stockTicker = "AMZN";
         LocalDate startDate = LocalDate.of(2001, 10, 10);
         LocalDate endDate = LocalDate.of(2001, 10, 18);

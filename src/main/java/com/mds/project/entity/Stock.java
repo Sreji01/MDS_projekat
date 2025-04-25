@@ -1,9 +1,8 @@
 package com.mds.project.entity;
 
 import jakarta.persistence.*;
-
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -21,7 +20,7 @@ public class Stock {
     private String stockTicker;
 
     @Column(name = "company_founding_date")
-    private Date companyFoundingDate;
+    private LocalDate companyFoundingDate;
 
     @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
     private List<StockInstance> instances = new ArrayList<>();
@@ -30,7 +29,7 @@ public class Stock {
 
     }
 
-    public Stock(String companyName, String stockTicker, Date companyFoundingDate) {
+    public Stock(String companyName, String stockTicker, LocalDate companyFoundingDate) {
         this.companyName = companyName;
         this.stockTicker = stockTicker;
         this.companyFoundingDate = companyFoundingDate;
@@ -60,11 +59,11 @@ public class Stock {
         this.stockTicker = stockTicker;
     }
 
-    public Date getCompanyFoundingDate() {
+    public LocalDate getCompanyFoundingDate() {
         return companyFoundingDate;
     }
 
-    public void setCompanyFoundingDate(Date companyFoundingDate) {
+    public void setCompanyFoundingDate(LocalDate companyFoundingDate) {
         this.companyFoundingDate = companyFoundingDate;
     }
 

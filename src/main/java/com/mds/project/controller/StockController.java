@@ -20,7 +20,7 @@ public class StockController {
     private StockService stockService;
 
     @PostMapping
-    public ResponseEntity<List<StockAnalysisResponse>> getBestTrades(@RequestBody StockAnalysisRequest request) {
+    public ResponseEntity<List<StockAnalysisResponse>> getBestTrades(@RequestBody StockAnalysisRequest request) throws Exception {
         List<StockAnalysisResponse> responses = stockService.analyseStocks(request.getStockTicker(),
                 request.getStartDate(),
                 request.getEndDate());
