@@ -46,7 +46,7 @@ public class StockService {
 
         Double startDateCloseValue = null;
         Double endDateCloseValue = null;
-        Double profit = 0.0;
+        Double profit = null;
 
         Double profitSum = 0.0;
 
@@ -72,11 +72,7 @@ public class StockService {
                 endDateCloseValue = stocks.get(i).getAdjClose();
             }
 
-            profit = (startDateCloseValue != null && endDateCloseValue != null) ? endDateCloseValue - startDateCloseValue : profit;
-
-            if(profit < 0){
-                profit = null;
-            }
+            profit = (startDateCloseValue != null && endDateCloseValue != null) ? endDateCloseValue - startDateCloseValue : null;
 
             Double startingValue = stocks.get(i).getAdjClose();
             Double maxProfit = Double.MIN_VALUE;
@@ -91,7 +87,11 @@ public class StockService {
                 profitSum += maxProfit - startingValue;
             }
         }
-        StockAnalysisResponse response = new StockAnalysisResponse(buyDate.toString(), getRoundValue(buyCloseValue), sellDate.toString(), getRoundValue(sellCloseValue), getRoundValue(profit), getRoundValue(profitSum));
+
+        String buyDateStr = (buyDate != null) ? buyDate.toString() : null;
+        String sellDateStr = (sellDate != null) ? sellDate.toString() : null;
+
+        StockAnalysisResponse response = new StockAnalysisResponse(buyDateStr, getRoundValue(buyCloseValue), sellDateStr, getRoundValue(sellCloseValue), getRoundValue(profit), getRoundValue(profitSum));
 
         response.setPeriod("From: " + startDate.toString() + " To: " + endDate.toString());
 
