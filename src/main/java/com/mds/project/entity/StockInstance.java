@@ -2,7 +2,8 @@ package com.mds.project.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "stock_instance")
@@ -12,7 +13,7 @@ public class StockInstance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date date;
+    private LocalDate date;
 
     private Double open;
 
@@ -35,8 +36,7 @@ public class StockInstance {
 
     }
 
-    public StockInstance(Long id, Date date, Double open, Double high, Double low, Double close, Double adjClose, Long volume) {
-        this.id = id;
+    public StockInstance(LocalDate date, Double open, Double high, Double low, Double close, Double adjClose, Long volume) {
         this.date = date;
         this.open = open;
         this.high = high;
@@ -54,11 +54,11 @@ public class StockInstance {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

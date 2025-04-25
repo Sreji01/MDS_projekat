@@ -14,7 +14,8 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -52,7 +53,7 @@ public class CsvService {
 
                     StockInstance instance = new StockInstance();
                     instance.setStock(stock);
-                    instance.setDate(safeParse(row[0], Date.class));
+                    instance.setDate(safeParse(row[0], LocalDate.class));
                     instance.setOpen(safeParse(row[1], Double.class));
                     instance.setHigh(safeParse(row[2], Double.class));
                     instance.setLow(safeParse(row[3], Double.class));
@@ -76,14 +77,14 @@ public class CsvService {
             return type.cast(Long.parseLong(value.trim()));
         } else if (type == Integer.class) {
             return type.cast(Integer.parseInt(value.trim()));
-        } else if (type == Date.class) {
+        } else if (type == LocalDate.class) {
             return type.cast(getDate(value.trim()));
         }
         throw new IllegalArgumentException("Unsupported type: " + type.getName());
     }
 
-    private Date getDate(String dateString) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        return format.parse(dateString);
+    private LocalDate getDate(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return LocalDate.parse(dateString, formatter);
     }
 }
