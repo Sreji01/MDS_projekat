@@ -5,21 +5,21 @@ import java.util.Date;
 public class StockAnalysisResponse {
 
     private String period;
-    private String buyDate;
-    private Double buyDateCloseValue;
-    private String sellDate;
-    private Double sellDateCloseValue;
+    private String bestBuyDate;
+    private Double bestBuyDateCloseValue;
+    private String bestSellDate;
+    private Double bestSellDateCloseValue;
     private Double profit;
     private Double maxProfit;
 
     public StockAnalysisResponse() {
     }
 
-    public StockAnalysisResponse(String buyDate, Double buyDateCloseValue, String sellDate, Double sellDateCloseValue, Double profit, Double maxProfit) {
-        this.buyDate = buyDate;
-        this.buyDateCloseValue = buyDateCloseValue;
-        this.sellDate = sellDate;
-        this.sellDateCloseValue = sellDateCloseValue;
+    public StockAnalysisResponse(String bestBuyDate, Double bestBuyDateCloseValue, String bestSellDate, Double bestSellDateCloseValue, Double profit, Double maxProfit) {
+        this.bestBuyDate = bestBuyDate;
+        this.bestBuyDateCloseValue = bestBuyDateCloseValue;
+        this.bestSellDate = bestSellDate;
+        this.bestSellDateCloseValue = bestSellDateCloseValue;
         this.profit = profit;
         this.maxProfit = maxProfit;
     }
@@ -32,36 +32,36 @@ public class StockAnalysisResponse {
         this.period = period;
     }
 
-    public String getBuyDate() {
-        return buyDate;
+    public String getBestBuyDate() {
+        return bestBuyDate;
     }
 
-    public void setBuyDate(String buyDate) {
-        this.buyDate = buyDate;
+    public void setBestBuyDate(String bestBuyDate) {
+        this.bestBuyDate = bestBuyDate;
     }
 
-    public Double getBuyDateCloseValue() {
-        return buyDateCloseValue;
+    public Double getBestBuyDateCloseValue() {
+        return bestBuyDateCloseValue;
     }
 
-    public void setBuyDateCloseValue(Double buyDateCloseValue) {
-        this.buyDateCloseValue = buyDateCloseValue;
+    public void setBestBuyDateCloseValue(Double bestBuyDateCloseValue) {
+        this.bestBuyDateCloseValue = bestBuyDateCloseValue;
     }
 
-    public String getSellDate() {
-        return sellDate;
+    public String getBestSellDate() {
+        return bestSellDate;
     }
 
-    public void setSellDate(String sellDate) {
-        this.sellDate = sellDate;
+    public void setBestSellDate(String bestSellDate) {
+        this.bestSellDate = bestSellDate;
     }
 
-    public Double getSellDateCloseValue() {
-        return sellDateCloseValue;
+    public Double getBestSellDateCloseValue() {
+        return bestSellDateCloseValue;
     }
 
-    public void setSellDateCloseValue(Double sellDateCloseValue) {
-        this.sellDateCloseValue = sellDateCloseValue;
+    public void setBestSellDateCloseValue(Double bestSellDateCloseValue) {
+        this.bestSellDateCloseValue = bestSellDateCloseValue;
     }
 
     public Double getProfit() {
@@ -84,10 +84,10 @@ public class StockAnalysisResponse {
     public String toString() {
         return "StockAnalysisResponse{" +
                 "period='" + period + '\'' +
-                ", buyDate=" + buyDate +
-                ", buyDateCloseValue=" + buyDateCloseValue +
-                ", sellDate=" + sellDate +
-                ", sellDateCloseValue=" + sellDateCloseValue +
+                ", bestBuyDate='" + bestBuyDate + '\'' +
+                ", bestBuyDateCloseValue=" + bestBuyDateCloseValue +
+                ", bestSellDate='" + bestSellDate + '\'' +
+                ", bestSellDateCloseValue=" + bestSellDateCloseValue +
                 ", profit=" + profit +
                 ", maxProfit=" + maxProfit +
                 '}';
